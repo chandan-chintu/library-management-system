@@ -32,4 +32,7 @@ public class Student {
     @Column(name = "grade", nullable = false)
     private String grade;
 
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    private Card card;
+
 }

@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -30,4 +33,15 @@ public class Book {
 
     @Column(name = "issued_to_student", nullable = false)
     private boolean issuedToStudent;
+
+    @ManyToOne
+    @JoinColumn
+    private Card card;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Transaction> transactionList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn
+    private Author author;
 }
