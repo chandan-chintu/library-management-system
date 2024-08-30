@@ -2,6 +2,7 @@ package com.example.student_library_management_system.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name="author")
+@Builder
 public class Author {
 
     @Id
