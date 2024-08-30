@@ -6,6 +6,8 @@ import com.example.student_library_management_system.repository.AuthorRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.example.student_library_management_system.converters.AuthorConverter.convertAuthorRequestDtoToAuthor;
 
 @Service // it contains business logic
@@ -19,5 +21,10 @@ public class AuthorService {
         author = convertAuthorRequestDtoToAuthor(authorRequestDto);
         authorRepository.save(author);
         return "Author saved successfully";
+    }
+
+    public List<Author> getAllAuthors(){
+        List<Author> authorList = authorRepository.findAll();
+        return authorList;
     }
 }

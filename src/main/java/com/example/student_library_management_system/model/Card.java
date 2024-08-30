@@ -1,6 +1,8 @@
 package com.example.student_library_management_system.model;
 
 import com.example.student_library_management_system.enums.CardStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,13 +38,16 @@ public class Card {
     @Enumerated(value = EnumType.STRING)
     private CardStatus cardStatus;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn
     private Student student; // this is used in parent Student model class while doing bidirectional mapping
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<Book> bookIssued = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<Transaction> transactionList = new ArrayList<>();
 }

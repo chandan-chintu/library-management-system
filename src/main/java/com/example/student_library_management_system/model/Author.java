@@ -1,5 +1,6 @@
 package com.example.student_library_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +35,7 @@ public class Author {
     @Column(name="rating", nullable = false)
     private double rating;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Book> booksOfAuthor = new ArrayList<>();
 }

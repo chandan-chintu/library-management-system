@@ -2,11 +2,14 @@ package com.example.student_library_management_system.service;
 
 import com.example.student_library_management_system.dto.StudentRequestDto;
 import com.example.student_library_management_system.enums.CardStatus;
+import com.example.student_library_management_system.model.Author;
 import com.example.student_library_management_system.model.Card;
 import com.example.student_library_management_system.model.Student;
 import com.example.student_library_management_system.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.example.student_library_management_system.converters.StudentConverter.convertStudentRequestDtoToStudent;
 
@@ -40,6 +43,11 @@ public class StudentService {
         studentRepository.save(student); // when saving student in student Repository even card gets saved in cardRepository through cascading effect
 
         return "Student and Card added successfully";
+    }
+
+    public List<Student> getAllStudents(){
+        List<Student> studentList = studentRepository.findAll();
+        return studentList;
     }
 
 }
