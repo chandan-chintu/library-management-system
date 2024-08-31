@@ -1,10 +1,7 @@
 package com.example.student_library_management_system.service;
 
 import com.example.student_library_management_system.dto.TransactionRequestDto;
-import com.example.student_library_management_system.model.Author;
-import com.example.student_library_management_system.model.Book;
-import com.example.student_library_management_system.model.Card;
-import com.example.student_library_management_system.model.Transaction;
+import com.example.student_library_management_system.model.*;
 import com.example.student_library_management_system.repository.BookRepository;
 import com.example.student_library_management_system.repository.CardRepository;
 import com.example.student_library_management_system.repository.TransactionRepository;
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.student_library_management_system.converters.TransactionConverter.convertTransactionRequestDtoToTransaction;
 
@@ -48,5 +46,11 @@ public class TransactionService {
     public List<Transaction> getAllTransactions(){
         List<Transaction> transactionList = transactionRepository.findAll();
         return transactionList;
+    }
+
+    public Transaction getTransactionById(int transactionId){
+        Optional<Transaction> transactionOptional = transactionRepository.findById(transactionId);
+        Transaction transaction = transactionOptional.get();
+        return transaction;
     }
 }

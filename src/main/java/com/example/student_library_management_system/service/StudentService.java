@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.student_library_management_system.converters.StudentConverter.convertStudentRequestDtoToStudent;
 
@@ -50,4 +51,39 @@ public class StudentService {
         return studentList;
     }
 
+    public Student getStudentById(int studentId){
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        Student student = studentOptional.get();
+        return student;
+    }
+
+    public String updateStudent(StudentRequestDto studentRequestDto, int studentId){
+        // whenever we perform update operation first we have to do find operation and after that update
+        Student studentFromDb = studentRepository.findById(studentId).get();
+        if(studentFromDb!=null){
+            studentFromDb.setName(studentRequestDto.getName());
+            studentFromDb.setAge(studentRequestDto.getAge());
+            studentFromDb.setMobile(studentRequestDto.getMobile());
+            studentFromDb.setEmail(studentRequestDto.getEmail());
+            studentFromDb.setGrade(studentRequestDto.getGrade());
+            studentRepository.save(studentFromDb);
+            return "Student updated successfully";
+        }
+        return "student not exists so update operation cannot be performed";
+    }
+
+    public String deleteStudentById(int studentId){
+        studentRepository.deleteById(studentId);
+        return "Student deleted";
+    }
+
+    public Student getStudentByEmail(String email){
+        Student student = studentRepository.findByEmail(email);
+        return student;
+    }
+
+    public List<Student> getStudentByGrade(String grade){
+        List<Student> studentList = studentRepository.findByGrade(grade);
+        return studentList;
+    }
 }

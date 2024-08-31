@@ -5,6 +5,7 @@ import com.example.student_library_management_system.dto.BookRequestDto;
 import com.example.student_library_management_system.model.Author;
 import com.example.student_library_management_system.model.Book;
 import com.example.student_library_management_system.model.Card;
+import com.example.student_library_management_system.model.Student;
 import com.example.student_library_management_system.repository.AuthorRepository;
 import com.example.student_library_management_system.repository.BookRepository;
 import com.example.student_library_management_system.repository.CardRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.student_library_management_system.converters.BookConverter.convertBookRequestDtoToBook;
 
@@ -46,5 +48,11 @@ public class BookService {
     public List<Book> getAllBooks(){
         List<Book> bookList = bookRepository.findAll();
         return bookList;
+    }
+
+    public Book getBookById(int bookId){
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        Book book = bookOptional.get();
+        return book;
     }
 }

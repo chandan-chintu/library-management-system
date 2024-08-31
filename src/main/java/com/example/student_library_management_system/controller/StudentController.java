@@ -25,4 +25,29 @@ public class StudentController {
     public List<Student> getAllStudents(){
         return studentService.getAllStudents();
     }
+
+    @GetMapping("/find/{studentid}")
+    public Student getStudentById(@PathVariable("studentid") int studentId){
+        return studentService.getStudentById(studentId);
+    }
+
+    @PutMapping("/update/{studentid}")
+    public String updateStudent(@RequestBody StudentRequestDto studentRequestDto,@PathVariable("studentid") int studentId){
+        return studentService.updateStudent(studentRequestDto,studentId);
+    }
+
+    @DeleteMapping("/delete/{studentid}")
+    public String deleteStudentById(@PathVariable("studentid") int studentId){
+        return studentService.deleteStudentById(studentId);
+    }
+
+    @GetMapping("/findByEmail")
+    public Student getStudentByEmail(@RequestParam("email") String email){
+        return studentService.getStudentByEmail(email);
+    }
+
+    @GetMapping("/findByGrade")
+    public List<Student> getStudentsByGrade(@RequestParam("grade") String grade){
+        return studentService.getStudentByGrade(grade);
+    }
 }

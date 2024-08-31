@@ -25,4 +25,9 @@ public class TransactionController {
     public List<Transaction> getAllTransactions(){
         return transactionService.getAllTransactions();
     }
+
+    @GetMapping("/find/{transactionid}")
+    public Transaction getTransactionById(@PathVariable("transactionid") int transactionId){
+        return transactionService.getTransactionById(transactionId);
+    }
 }

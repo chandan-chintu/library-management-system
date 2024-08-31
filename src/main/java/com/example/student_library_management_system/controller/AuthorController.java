@@ -24,4 +24,14 @@ public class AuthorController {
     public List<Author> getAllAuthors(){
         return authorService.getAllAuthors();
     }
+
+    @GetMapping("/find/{authorid}")
+    public Author getAuthorById(@PathVariable("authorid") int authorId){
+        return authorService.getAuthorById(authorId);
+    }
+
+    @PutMapping("/update/{authorid}")
+    public String updateAuthor(@RequestBody AuthorRequestDto authorRequestDto, @PathVariable("authorid") int authorId){
+        return authorService.updateAuthor(authorRequestDto, authorId);
+    }
 }
