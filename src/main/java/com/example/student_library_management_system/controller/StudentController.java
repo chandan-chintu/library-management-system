@@ -5,6 +5,7 @@ import com.example.student_library_management_system.model.Author;
 import com.example.student_library_management_system.model.Student;
 import com.example.student_library_management_system.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,11 @@ public class StudentController {
 
     @PostMapping("/create")
     public String addStudent(@RequestBody StudentRequestDto studentRequestDto){
-        return studentService.addStudent(studentRequestDto);
+        try {
+            return studentService.addStudent(studentRequestDto);
+        }catch (Exception e){
+            return "Exception occured while saving : "+e.getMessage();
+        }
     }
 
     @GetMapping("/findAll")
@@ -27,8 +32,12 @@ public class StudentController {
     }
 
     @GetMapping("/find/{studentid}")
-    public Student getStudentById(@PathVariable("studentid") int studentId){
-        return studentService.getStudentById(studentId);
+    public ResponseEntity<?> getStudentById(@PathVariable("studentid") int studentId){
+        try {
+            return ResponseEntity.ok().body(studentService.getStudentById(studentId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Exception occured : "+e.getMessage());
+        }
     }
 
     @PutMapping("/update/{studentid}")
@@ -49,5 +58,15 @@ public class StudentController {
     @GetMapping("/findByGrade")
     public List<Student> getStudentsByGrade(@RequestParam("grade") String grade){
         return studentService.getStudentByGrade(grade);
+    }
+
+    @GetMapping("/findStudentPages")
+    public List<Student> getStudentsBasedOnPagination(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize, @RequestParam("sortParameter") String sortParameter){
+        return studentService.getStudentsBasedOnPagination(pageNo, pageSize, sortParameter);
+    }
+
+    @GetMapping("/getCount")
+    public String getStudentCount(){
+        return studentService.getStudentCount();
     }
 }
