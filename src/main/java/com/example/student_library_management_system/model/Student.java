@@ -36,7 +36,7 @@ public class Student {
     private String grade;
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Card card;
 
 }

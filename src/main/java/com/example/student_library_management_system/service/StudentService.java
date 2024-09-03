@@ -6,6 +6,8 @@ import com.example.student_library_management_system.model.Author;
 import com.example.student_library_management_system.model.Card;
 import com.example.student_library_management_system.model.Student;
 import com.example.student_library_management_system.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,10 +23,13 @@ import static com.example.student_library_management_system.converters.StudentCo
 @Service
 public class StudentService {
 
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     @Autowired
     private StudentRepository studentRepository;
 
     public String addStudent(StudentRequestDto studentRequestDto) {
+        logger.info("addStudent method has started");
         // create model class object
         Student student = new Student();
 
@@ -46,7 +51,8 @@ public class StudentService {
 
         // save the student object
         studentRepository.save(student); // when saving student in student Repository even card gets saved in cardRepository through cascading effect
-
+        logger.info("student has successfully saved");
+        logger.info("addStudent method has ended");
         return "Student and Card added successfully";
     }
 
@@ -56,11 +62,15 @@ public class StudentService {
     }
 
     public Student getStudentById(int studentId) {
+        logger.info("getStudentById method has started");
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()){
+            logger.error("student is not present in database");
             throw new RuntimeException("Student not found");
         }
         Student student = studentOptional.get();
+        logger.info("student details are present");
+        logger.info("getStudentById method has ended");
         return student;
     }
 
